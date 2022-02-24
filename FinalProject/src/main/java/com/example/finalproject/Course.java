@@ -16,7 +16,7 @@ public class Course {
     private String year;
     private String semester;
     private String pid;
-    
+
     public Integer getCourseId() {
         return courseId;
     }
