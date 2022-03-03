@@ -1,6 +1,9 @@
 package com.example.finalproject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -57,31 +60,33 @@ public class GradesController {
         }
     }
 
-    /*
-    @PutMapping(path = "/modifyGrades/{studentId}")
+
+    @PutMapping(path = "/modifyGrades/{studentId}",
+                consumes = MediaType.APPLICATION_JSON_VALUE,
+                produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Grades> updateGrades(@PathVariable("studentId") Integer studentId,
                                                @Validated @RequestBody Grades gradeDetails){
-        Grades grades = gradesRepository.findGradesByStudentIdOrderByGrade(studentId);
+        Grades grades = (Grades) gradesRepository.getGradesByStudentIdOrderByGrade(studentId);
         grades.setStudentId(gradeDetails.getStudentId());
         grades.setCourseId(gradeDetails.getCourseId());
         grades.setGrade(gradeDetails.getGrade());
-        final Grades updatedGrade = gradesRepository.save(grades);
-        return ResponseEntity.ok(updatedGrade);
+        if(studentId != null) {
+            final Grades updatedGrade = gradesRepository.save(grades);
+            return ResponseEntity.ok(updatedGrade);
+        }else{
+            return null;
+        }
     }
 
 
     @DeleteMapping(path = "/deleteGrades/{studentId}")
     public String deleteGrades(@PathVariable("studentId") Integer studentId){
-        Grades grades = gradesRepository.findGradesByStudentIdOrderByGrade(studentId);
+        Grades grades = (Grades) gradesRepository.getGradesByStudentIdOrderByGrade(studentId);
         gradesRepository.delete(grades);
         Student student = studentRepository.findStudentByStudentId(studentId);
-        studentRepository.delete(student);
-        Integer courseId = grades.getCourseId();
-        Course course = courseRepository.findCourseByCourseId(courseId);
-        courseRepository.delete(course);
         return "Grades have been deleted for: " + student.getFirstName() + " have been successfully deleted!";
     }
-    */
+
 
 
 }

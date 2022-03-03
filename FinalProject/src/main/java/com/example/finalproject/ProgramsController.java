@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,9 @@ public class ProgramsController {
         return programsRepository.findProgramsByPid(pid);
     }
 
-    @PutMapping(path = "/modifyProgram/{pid}")
+    @PutMapping(path = "/modifyProgram/{pid}",
+                consumes = MediaType.APPLICATION_JSON_VALUE,
+                produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Programs> updateProgram(@PathVariable("pid") Integer pid,
                                                @Validated @RequestBody Programs programDetails){
         Programs program = programsRepository.findProgramsByPid(pid);

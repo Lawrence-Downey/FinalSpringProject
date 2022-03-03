@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,9 @@ public class StudentController {
         return studentRepository.findStudentByStudentId(studentId);
     }
 
-    @PutMapping(path = "/modifyStudent/{studentId}")
+    @PutMapping(path = "/modifyStudent/{studentId}",
+                consumes = MediaType.APPLICATION_JSON_VALUE,
+                produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Student> updateStudent(@PathVariable("studentId") Integer studentId,
                                         @Validated @RequestBody Student studentDetails ){
         Student student = studentRepository.findStudentByStudentId(studentId);

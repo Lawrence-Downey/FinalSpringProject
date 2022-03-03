@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +27,28 @@ public class EnrollmentController {
         return "Enrollment has been added successfully!";
     }
 
-    @GetMapping(path = "/listEnrollmentStudent")
-    public @ResponseBody Iterable<Enrollment> getEnrollment(){
-        return enrollmentRepository.findAll();
+    @GetMapping(path = "/list/StudentEnrollment/{studentId}")
+    public @ResponseBody Iterable<Enrollment> getStudentEnrollment(@PathVariable("studentId") Integer studentId){
+        if(studentId != null) {
+            return enrollmentRepository.getEnrollmentByStudentIdOrderByEid(studentId);
+        }else{
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/list/CourseEnrollment/{courseId}")
+    public @ResponseBody Iterable<Enrollment> getCourseEnrollment(@PathVariable("courseId") Integer courseId){
+        if(courseId != null) {
+            return enrollmentRepository.getEnrollmentByCourseIdOrderByEid(courseId);
+        }else{
+            return null;
+        }
     }
 
 
-    @PutMapping(path = "/modifyEnrollment/{eid}")
+    @PutMapping(path = "/modifyEnrollment/{eid}",
+                consumes = MediaType.APPLICATION_JSON_VALUE,
+                produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Enrollment> updateEnrollment(@PathVariable("eid") Integer eid,
                                                   @Validated @RequestBody Enrollment enrollmentDetails){
         Enrollment enrollment = enrollmentRepository.findEnrollmentByEid(eid);
