@@ -1,13 +1,9 @@
 package com.example.finalproject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.*;
 
 @RestController
 @RequestMapping(path = "/student")
@@ -41,10 +37,10 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping(path = "/viewStudent/{id}")
+    @GetMapping(path = "/viewStudent/{studentId}")
     public @ResponseBody
-    Student viewStudent(@PathVariable Integer id) {
-        return studentRepository.findStudentByStudentId(id);
+    Student viewStudent(@PathVariable Integer studentId) {
+        return studentRepository.findStudentByStudentId(studentId);
     }
 
     @PutMapping(path = "/modifyStudent/{studentId}")

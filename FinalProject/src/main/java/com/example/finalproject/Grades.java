@@ -11,8 +11,8 @@ public class Grades {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gid;
-    private String studentId;
-    private String courseId;
+    private Integer studentId;
+    private Integer courseId;
     private String grade;
 
 
@@ -24,18 +24,18 @@ public class Grades {
     }
 
 
-    public String getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
-    public void setStudentId(String studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
 
-    public String getCourseId() {
+    public Integer getCourseId() {
         return courseId;
     }
-    public void setCourseId(String courseId) {
+    public void setCourseId(Integer courseId) {
         this.courseId = courseId;
     }
 

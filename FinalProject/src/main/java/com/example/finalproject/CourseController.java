@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping(path="/course")
 public class CourseController {
@@ -31,9 +30,9 @@ public class CourseController {
         return courseRepository.findAll();
     }
 
-    @GetMapping(path = "/viewCourse/{id}")
-    public @ResponseBody Course viewCourse(@PathVariable Integer id){
-        return courseRepository.findCourseByCourseId(id);
+    @GetMapping(path = "/viewCourse/{courseId}")
+    public @ResponseBody Course viewCourse(@PathVariable Integer courseId){
+        return courseRepository.findCourseByCourseId(courseId);
     }
 
     @PutMapping(path = "/modifyCourse/{courseId}")
@@ -48,6 +47,13 @@ public class CourseController {
         course.setPid(courseDetails.getPid());
         final Course updatedCourse = courseRepository.save(course);
         return ResponseEntity.ok(updatedCourse);
+    }
+
+    @DeleteMapping(path = "/deleteCourse/{courseId}")
+    public String deleteCourse(@PathVariable("courseId") Integer courseId){
+        Course course = courseRepository.findCourseByCourseId(courseId);
+        courseRepository.delete(course);
+        return "Course: " + course.getCourseName() + " was successfully deleted!";
     }
 
 }
